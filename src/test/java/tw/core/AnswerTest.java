@@ -4,6 +4,9 @@ package tw.core;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tw.core.exception.AnswerFormatIncorrectException;
+import tw.core.model.Record;
+
+import java.lang.reflect.Array;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,13 +44,24 @@ public class AnswerTest {
     }
     public void should_call_success_message_given_a_sameIndex_date(){
         //given
-        actualAnswer = Answer.createAnswer("3 2 3 4");
-        //when
+        Answer inputAnswer = Answer.createAnswer("1 2 3 4");
         try{
-            actualAnswer.validate();
-            fail("should fial,but not");
+            inputAnswer.validate();
         }catch (AnswerFormatIncorrectException exception){
 
         }
+        //when
+        Record Actualrecord = actualAnswer.check(inputAnswer);
+        int[] exceptionRecordValue = new int[]{4,0};
+        assertThat(Actualrecord.getValue(), is(exceptionRecordValue));
+ }
+
+    public void should_call_success_given_a_diffent_Index_date(){
+        //given
+        Answer inputAnswer = Answer.createAnswer("4 3 2 1");
+        //when
+        Record Actualrecord = actualAnswer.check(inputAnswer);
+        int[] exceptionRecordValue = new int[]{0,4};
+        assertThat(Actualrecord.getValue(), is(exceptionRecordValue));
     }
 }
