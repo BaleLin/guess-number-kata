@@ -31,6 +31,7 @@ public class AnswerTest {
             exception.printStackTrace();
         }
     }
+    @Test
     public void should_call_a_fail_message_given_a_unvalidate_date(){
         //given
         actualAnswer = Answer.createAnswer("13 22 3 4");
@@ -42,6 +43,7 @@ public class AnswerTest {
 
         }
     }
+    @Test
     public void should_call_success_message_given_a_sameIndex_date(){
         //given
         Answer inputAnswer = Answer.createAnswer("1 2 3 4");
@@ -52,7 +54,7 @@ public class AnswerTest {
         }
         //when
         Record Actualrecord = actualAnswer.check(inputAnswer);
-        assertThat(Actualrecord.getValue(), is("0A3B"));
+        assertThat(Actualrecord.getValue(), is("4A0B"));
  }
     @Test
     public void should_call_success_given_a_diffent_Index_date(){
