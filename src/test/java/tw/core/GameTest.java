@@ -4,6 +4,7 @@ package tw.core;/*
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tw.core.exception.OutOfGuessCountException;
 import tw.core.generator.AnswerGenerator;
 import tw.core.model.GuessResult;
 
@@ -11,6 +12,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class GameTest {
 
@@ -37,5 +40,32 @@ public class GameTest {
 
     }
 
+    @Test
+    public void should_get_the_continue_status_when_guess_input_is_correct() throws Exception {
 
+        //given
+//        excuteSuccessGuess();
+        GuessResult guess = game.guess(Answer.createAnswer("2 5 3 4"));
+        game.guess(Answer.createAnswer("2 5 3 4"));
+        assertThat(guess.getResult(), is("2A1B"));
+
+    }
+    @Test
+    public void should_get_guessHistory_result_when_after_guess() throws Exception {
+        GuessResult guess = game.guess(Answer.createAnswer("1 2 3 4"));
+        assertThat(game.guessHistory().get(0).getResult(), is("4A0B"));
+    }
+    @Test
+    public void should_get_the_fail_status_when_guess_input_is_wrong() throws Exception {
+        try{
+            for(int i =0;i<7;i++){
+                game.guess(Answer.createAnswer("2 1 5 8"));
+            }
+            fail("Guess count cant over 6!");
+        }catch (OutOfGuessCountException exception){
+
+        }
+
+
+    }
 }
