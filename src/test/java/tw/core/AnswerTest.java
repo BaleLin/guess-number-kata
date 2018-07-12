@@ -33,7 +33,7 @@ public class AnswerTest {
     }
     public void should_call_a_fail_message_given_a_unvalidate_date(){
         //given
-        actualAnswer = Answer.createAnswer("3 2 3 4");
+        actualAnswer = Answer.createAnswer("13 22 3 4");
         //when
         try{
             actualAnswer.validate();
@@ -52,16 +52,20 @@ public class AnswerTest {
         }
         //when
         Record Actualrecord = actualAnswer.check(inputAnswer);
-        int[] exceptionRecordValue = new int[]{4,0};
-        assertThat(Actualrecord.getValue(), is(exceptionRecordValue));
+        assertThat(Actualrecord.getValue(), is("0A3B"));
  }
-
+    @Test
     public void should_call_success_given_a_diffent_Index_date(){
         //given
-        Answer inputAnswer = Answer.createAnswer("4 3 2 1");
+        Answer inputAnswer = Answer.createAnswer("6 3 2 1");
         //when
         Record Actualrecord = actualAnswer.check(inputAnswer);
-        int[] exceptionRecordValue = new int[]{0,4};
-        assertThat(Actualrecord.getValue(), is(exceptionRecordValue));
+        assertThat(Actualrecord.getValue(), is("0A3B"));
+    }
+
+    @Test
+    public void should_return_String_of_newlists_when_toString(){
+        Answer answer = Answer.createAnswer("2 1 5 4");
+        assertThat(answer.toString(),is("2 1 5 4"));
     }
 }
